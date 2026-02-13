@@ -43,13 +43,32 @@ _Profiles adapt HOW we teach. The core (6 Gates, code reviews, quality) stays th
 
 ### 1) Fresh machine setup (not configured yet)
 
-Install and initialize Skillshare (see Skillshare docs for OS-specific install):
+Install Skillshare:
+
+```bash
+# macOS / Linux (curl installer)
+curl -fsSL https://raw.githubusercontent.com/runkids/skillshare/main/install.sh | sh
+```
+
+Optional (macOS/Homebrew):
+
+```bash
+brew install runkids/tap/skillshare
+```
+
+Initialize global Skillshare:
 
 ```bash
 skillshare init --no-copy --all-targets --git --skill
 ```
 
-If targets were not auto-detected:
+Verify CLI is available:
+
+```bash
+skillshare version
+```
+
+If targets were not auto-detected, add them explicitly:
 
 ```bash
 skillshare target add claude ~/.claude/skills -g
@@ -64,6 +83,12 @@ skillshare sync -g
 skillshare status -g
 ```
 
+### Command location (important)
+
+- `-g` (global mode) commands can be run from **any directory**.
+- `-p` (project mode) commands should be run from the **project root** (directory containing `.skillshare/config.yaml`).
+- In this setup, OwnYourCode is organization-level, so use `-g`.
+
 ### 2) Existing machine (Skillshare already configured)
 
 ```bash
@@ -74,11 +99,20 @@ skillshare status -g
 
 ### 3) Per-project initialization
 
-Migrate or create the tool-agnostic manifest in your project root:
+Run this once per project (from project root):
 
 ```bash
 ~/.config/skillshare/skills/ownyourcode/scripts/migrate-manifest.sh .
 ```
+
+Why this exists:
+- Old OwnYourCode stored profile/config in `.claude/ownyourcode-manifest.json`.
+- New tool-agnostic path is `.ownyourcode/manifest.json`.
+- This script preserves your existing profile/history by copying forward once.
+
+When to run:
+- Existing repo that previously used Claude OwnYourCode: **yes** (recommended).
+- Brand new repo with no legacy OwnYourCode files: **optional** (it initializes defaults).
 
 Then invoke OwnYourCode naturally (in Claude or Codex), for example:
 
@@ -156,6 +190,12 @@ Use natural-language invocation with the `ownyourcode` orchestrator skill.
 | `profile` | "Use ownyourcode profile and update preferences" |
 | `test` | "Use ownyourcode test planning for this feature" |
 | `docs` | "Use ownyourcode docs for this change" |
+
+### Trigger model in Codex
+
+- Primary: natural language ("Use ownyourcode ...").
+- Also valid: explicitly ask Codex to use a specific skill by name.
+- Codex supports slash commands at the app/CLI level (see `/help`), but legacy custom `/own:*` command wiring is not required in this Skillshare model.
 
 ### Legacy command mapping (if you previously used Claude slash commands)
 
