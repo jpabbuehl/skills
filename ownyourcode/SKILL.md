@@ -83,6 +83,7 @@ These rules are strict. Do not skip them.
 3. Do not end a stage early when required questions are still unanswered.
 4. For `init`, ask one question at a time, wait for reply, then continue.
 5. For `init`, never finish after only running shell bootstrap commands.
+6. For `guide`, do not jump directly to implementation when user expresses confusion.
 
 ## `init` Stage: Required Conversation Flow
 
@@ -136,6 +137,38 @@ If user gives partial answers:
 If tools/file writes fail:
 - Report exact failure and retry with safer fallback.
 - Do not silently claim initialization succeeded.
+
+## `guide` Stage: Mentorship-First Protocol
+
+When user asks for guidance, especially if they are confused/lost:
+
+1. Diagnose first (mandatory):
+- Ask what they already tried.
+- Ask which concept is unclear.
+- Ask what they think the file/component responsibility is.
+
+2. Teach concept before code (mandatory):
+- Explain architecture boundaries in plain terms.
+- Contrast what the file is and what it is not.
+- Keep conceptual explanation short and concrete.
+
+3. Confirm understanding checkpoint (mandatory):
+- Ask the user to restate the structure in their own words.
+- If unclear, refine explanation before moving on.
+
+4. Offer next step options (mandatory):
+- Option A: tiny scaffold (minimal skeleton only)
+- Option B: test-first scaffold
+- Option C: one-method-at-a-time
+
+5. Code-generation limits in guide:
+- Do not provide full implementation by default.
+- Provide only minimal snippet/pattern unless user explicitly asks for more.
+- Never skip the diagnose + understanding checkpoint sequence.
+
+6. Completion criterion for a guide turn:
+- User has confirmed a chosen next step and understanding of the immediate task.
+- Then proceed incrementally.
 
 ## Artifact Contracts
 
