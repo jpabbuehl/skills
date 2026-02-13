@@ -113,6 +113,10 @@ When user asks to initialize OwnYourCode, execute this exact sequence:
 
 5. Persist outputs before completion (mandatory):
 - Write/update `.ownyourcode/manifest.json` with profile + settings.
+  - Normalize values:
+    - `profile.type`: `experienced` (lowercase canonical)
+    - `profile.settings.career_focus`: `learning only`
+    - `profile.settings.use_analogies`: `false`
 - Write/update:
   - `ownyourcode/product/mission.md`
   - `ownyourcode/product/stack.md`
