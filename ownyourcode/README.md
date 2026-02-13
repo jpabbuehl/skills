@@ -39,57 +39,13 @@ _Profiles adapt HOW we teach. The core (6 Gates, code reviews, quality) stays th
 
 ---
 
-## Quick Start (Skillshare, Claude + Codex)
+## Quick Start (OwnYourCode Skill)
 
-### 1) Fresh machine setup (not configured yet)
+Machine-level Skillshare setup and multi-skill installation are documented in the parent repo README:
 
-Install Skillshare:
+- `../README.md` (skills repository root)
 
-```bash
-# macOS / Linux (curl installer)
-curl -fsSL https://raw.githubusercontent.com/runkids/skillshare/main/install.sh | sh
-```
-
-Optional (macOS/Homebrew):
-
-```bash
-brew install runkids/tap/skillshare
-```
-
-Initialize global Skillshare:
-
-```bash
-skillshare init --no-copy --all-targets --git --skill
-```
-
-Verify CLI is available:
-
-```bash
-skillshare version
-```
-
-If targets were not auto-detected, add them explicitly:
-
-```bash
-skillshare target add claude ~/.claude/skills -g
-skillshare target add codex ~/.codex/skills -g
-```
-
-Install OwnYourCode as an org-level skill and sync:
-
-```bash
-skillshare install github.com/jpabbuehl/skills/ownyourcode --name ownyourcode -g
-skillshare sync -g
-skillshare status -g
-```
-
-### Command location (important)
-
-- `-g` (global mode) commands can be run from **any directory**.
-- `-p` (project mode) commands should be run from the **project root** (directory containing `.skillshare/config.yaml`).
-- In this setup, OwnYourCode is organization-level, so use `-g`.
-
-### 2) Existing machine (Skillshare already configured)
+### 1) Install/update OwnYourCode skill (global)
 
 ```bash
 skillshare install github.com/jpabbuehl/skills/ownyourcode --name ownyourcode --force -g
@@ -97,24 +53,17 @@ skillshare sync -g
 skillshare status -g
 ```
 
-### 3) Per-project initialization
+### 2) Per-project initialization (from scratch)
 
-Run this once per project (from project root):
+Run these commands from project root:
 
 ```bash
 ~/.config/skillshare/skills/ownyourcode/scripts/migrate-manifest.sh .
+mkdir -p ownyourcode/product ownyourcode/specs/active ownyourcode/career/stories
+touch ownyourcode/product/mission.md ownyourcode/product/stack.md ownyourcode/product/roadmap.md
 ```
 
-Why this exists:
-- Old OwnYourCode stored profile/config in `.claude/ownyourcode-manifest.json`.
-- New tool-agnostic path is `.ownyourcode/manifest.json`.
-- This script preserves your existing profile/history by copying forward once.
-
-When to run:
-- Existing repo that previously used Claude OwnYourCode: **yes** (recommended).
-- Brand new repo with no legacy OwnYourCode files: **optional** (it initializes defaults).
-
-Then invoke OwnYourCode naturally (in Claude or Codex), for example:
+Invoke OwnYourCode in Claude or Codex:
 
 ```text
 Use ownyourcode to initialize this project
@@ -195,7 +144,7 @@ Use natural-language invocation with the `ownyourcode` orchestrator skill.
 
 - Primary: natural language ("Use ownyourcode ...").
 - Also valid: explicitly ask Codex to use a specific skill by name.
-- Codex supports slash commands at the app/CLI level (see `/help`), but legacy custom `/own:*` command wiring is not required in this Skillshare model.
+- Codex slash commands are built-in command surfaces; custom `/own:*` commands are not provided by this Skillshare setup.
 
 ### Legacy command mapping (if you previously used Claude slash commands)
 
@@ -207,6 +156,11 @@ Use natural-language invocation with the `ownyourcode` orchestrator skill.
 | `/own:guide` | "Use ownyourcode guide while I code" |
 | `/own:done` | "Use ownyourcode done and run the 6 gates" |
 | `/own:retro` | "Use ownyourcode retro and capture learnings" |
+
+### `/own:init` compatibility
+
+- Claude Code: works only if a matching custom command/skill exists in your Claude setup (check with `/help`).
+- Codex: do not use `/own:init`; use `ownyourcode` skill invocation (`/skills`, `$ownyourcode`, or natural language).
 
 ---
 
