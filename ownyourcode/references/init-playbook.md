@@ -2,34 +2,21 @@
 
 Use this playbook for `init` stage in Codex/Claude.
 
+## Default Preset
+
+Apply this by default (without asking):
+
+- `profile.type`: `experienced`
+- `profile.settings.career_focus`: `learning only`
+- `profile.settings.use_analogies`: `false`
+
+Only ask profile/preference questions if the user explicitly asks to customize.
+
 ## Required Questions
 
 Ask in order:
 
-1. Profile type:
-- Junior
-- Career Switcher
-- Interview Prep
-- Experienced
-- Custom
-
-2. Career focus:
-- Full extraction
-- Interview tips only
-- Learning only
-
-3. Analogies:
-- Use analogies? yes/no
-- If yes: ask analogy domain (free text)
-
-4. Profile-specific:
-- Junior: coding background
-- Career Switcher: previous field, focus area
-- Interview Prep: position title, target company
-- Experienced: background summary
-- Custom: teaching style, feedback style, pacing, personal touch
-
-5. Project definition:
+1. Project definition:
 - Mission statement
 - Primary stack
 - Roadmap phases (at least 3)

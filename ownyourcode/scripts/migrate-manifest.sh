@@ -22,9 +22,12 @@ cat > "$new_manifest" <<JSON
 {
   "version": "2.3.0",
   "profile": {
-    "type": null,
+    "type": "experienced",
     "configured_at": null,
-    "settings": {}
+    "settings": {
+      "career_focus": "learning only",
+      "use_analogies": false
+    }
   },
   "skills": [],
   "commands": []

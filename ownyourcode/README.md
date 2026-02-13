@@ -25,7 +25,10 @@ AI coding tools optimize for **shipping**. The risk: code that works but isn't t
 
 ## Who This Is For
 
-**Profile selection is part of `/own:init`.** Choose your profile and OwnYourCode adapts its teaching style.
+`init` uses a default mentoring preset:
+- Profile: `Experienced`
+- Career focus: `learning only`
+- Analogies: `off`
 
 | Profile             | Design Thinking | Career Extraction | Unique Feature                                          |
 | ------------------- | --------------- | ----------------- | ------------------------------------------------------- |
@@ -35,7 +38,7 @@ AI coding tools optimize for **shipping**. The risk: code that works but isn't t
 | **Experienced**     | On request      | On request        | You have the experience, get direct feedback and peer-level collaboration |
 | **Custom**          | On request      | On request        | Mix and match to fit how you learn |
 
-_Profiles adapt HOW we teach. The core (6 Gates, code reviews, quality) stays the same. Change anytime with `/own:profile`._
+You can still override these defaults later via `profile` stage.
 
 ---
 
@@ -68,6 +71,8 @@ Invoke OwnYourCode in Claude or Codex:
 ```text
 Use ownyourcode to initialize this project
 ```
+
+`init` will now ask only for project details (mission, stack, and roadmap phases) by default.
 
 ---
 

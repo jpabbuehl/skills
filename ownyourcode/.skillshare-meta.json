@@ -1,5 +1,8 @@
 {
-  "source": "/Users/abbuehlj/dev/skillshare_test/migration_assets/ownyourcode",
-  "type": "local",
-  "installed_at": "2026-02-13T15:55:54.70035+01:00"
+  "source": "github.com/jpabbuehl/skills/ownyourcode",
+  "type": "github-subdir",
+  "installed_at": "2026-02-13T16:42:01.650988+01:00",
+  "repo_url": "https://github.com/jpabbuehl/skills.git",
+  "subdir": "ownyourcode",
+  "version": "92f1436"
 }

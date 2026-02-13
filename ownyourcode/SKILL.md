@@ -36,7 +36,7 @@ The user should own what they build. If they cannot explain it, they do not own 
 Map natural-language intent to one of these stages:
 
 1. `init`
-- Collect profile and goals.
+- Apply default profile preset and collect project goals.
 - Establish mission, stack, and roadmap artifacts.
 - Ensure manifest exists at `.ownyourcode/manifest.json`.
 - If missing, run manifest migration fallback from `.claude/ownyourcode-manifest.json`.
@@ -97,33 +97,28 @@ When user asks to initialize OwnYourCode, execute this exact sequence:
   - `ownyourcode/specs/active/`
   - `ownyourcode/career/stories/`
 
-2. Ask profile selection (mandatory):
-- "Which profile fits you best: Junior, Career Switcher, Interview Prep, Experienced, or Custom?"
+2. Apply default profile preset (mandatory):
+- `profile.type`: `experienced`
+- `profile.settings.career_focus`: `learning only`
+- `profile.settings.use_analogies`: `false`
 
-3. Ask shared preferences (mandatory):
-- Career focus: full extraction / interview tips / learning only
-- Analogies: yes/no (if yes, ask domain free text)
-
-4. Ask profile-specific questions (mandatory):
-- Junior: coding background
-- Career Switcher: previous field + focus area
-- Interview Prep: position title + target company
-- Experienced: engineering background summary
-- Custom: teaching style, feedback style, pacing, personal touch
-
-5. Ask project definition questions (mandatory):
+3. Ask project definition questions (mandatory):
 - Project mission (problem + users + value)
 - Primary tech stack
 - First 3 development phases
 
-6. Persist outputs before completion (mandatory):
+4. Optional override path:
+- Only if user explicitly asks to customize mentoring profile/preferences,
+  collect overrides and persist them in manifest.
+
+5. Persist outputs before completion (mandatory):
 - Write/update `.ownyourcode/manifest.json` with profile + settings.
 - Write/update:
   - `ownyourcode/product/mission.md`
   - `ownyourcode/product/stack.md`
   - `ownyourcode/product/roadmap.md`
 
-7. Finalize with review loop:
+6. Finalize with review loop:
 - Present concise summary of saved profile + artifacts.
 - Ask user to confirm or request edits.
 - Only after confirmation, mark `init` complete.
