@@ -50,6 +50,8 @@ Map natural-language intent to one of these stages:
 
 4. `guide`
 - Provide implementation guidance and checkpoints, not full handoff code.
+- MUST load and follow `references/claude-commands/own/guide.md` as primary flow.
+- Apply local overrides from this file (defaults, tooling constraints, and no Claude-only command assumptions).
 
 5. `stuck`
 - Run Protocol D: READ -> ISOLATE -> DOCS -> HYPOTHESIZE -> VERIFY.
@@ -169,6 +171,16 @@ When user asks for guidance, especially if they are confused/lost:
 6. Completion criterion for a guide turn:
 - User has confirmed a chosen next step and understanding of the immediate task.
 - Then proceed incrementally.
+
+### Required Source of Truth for `guide`
+
+For every `guide` turn:
+1. Read `references/claude-commands/own/guide.md`.
+2. Use its phase structure as the base behavior.
+3. Overlay this skill's constraints:
+- Natural-language stage routing (no required `/own:*` command).
+- Default profile preset behavior.
+- Tool/environment compatibility in Codex.
 
 ## Artifact Contracts
 
