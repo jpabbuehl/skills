@@ -86,6 +86,29 @@ These rules are strict. Do not skip them.
 4. For `init`, ask one question at a time, wait for reply, then continue.
 5. For `init`, never finish after only running shell bootstrap commands.
 6. For `guide`, do not jump directly to implementation when user expresses confusion.
+7. For every stage, load and follow the matching legacy command reference as primary workflow.
+
+## Required Source of Truth by Stage
+
+For each detected stage, read the matching file first, then execute:
+
+- `init` -> `references/claude-commands/own/init.md`
+- `feature` -> `references/claude-commands/own/feature.md`
+- `advise` -> `references/claude-commands/own/advise.md`
+- `guide` -> `references/claude-commands/own/guide.md`
+- `stuck` -> `references/claude-commands/own/stuck.md`
+- `done` -> `references/claude-commands/own/done.md`
+- `retro` -> `references/claude-commands/own/retro.md`
+- `status` -> `references/claude-commands/own/status.md`
+- `profile` -> `references/claude-commands/own/profile.md`
+- `test` -> `references/claude-commands/own/test.md`
+- `docs` -> `references/claude-commands/own/docs.md`
+
+Then overlay this skill's constraints:
+- Natural-language stage routing (no required `/own:*` command).
+- Default profile preset behavior.
+- Tool/environment compatibility in Codex.
+- No mandatory Claude-only tool assumptions.
 
 ## `init` Stage: Required Conversation Flow
 
@@ -174,13 +197,7 @@ When user asks for guidance, especially if they are confused/lost:
 
 ### Required Source of Truth for `guide`
 
-For every `guide` turn:
-1. Read `references/claude-commands/own/guide.md`.
-2. Use its phase structure as the base behavior.
-3. Overlay this skill's constraints:
-- Natural-language stage routing (no required `/own:*` command).
-- Default profile preset behavior.
-- Tool/environment compatibility in Codex.
+For every `guide` turn, use `references/claude-commands/own/guide.md` as the base behavior and apply the global stage overlays defined above.
 
 ## Artifact Contracts
 
