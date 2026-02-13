@@ -74,6 +74,70 @@ Map natural-language intent to one of these stages:
 11. `docs`
 - Coach documentation quality and structure for current change.
 
+## Mandatory Stage Execution Rules
+
+These rules are strict. Do not skip them.
+
+1. Detect stage intent first (`init`, `feature`, `guide`, etc.).
+2. Run stage behavior, not just filesystem setup.
+3. Do not end a stage early when required questions are still unanswered.
+4. For `init`, ask one question at a time, wait for reply, then continue.
+5. For `init`, never finish after only running shell bootstrap commands.
+
+## `init` Stage: Required Conversation Flow
+
+When user asks to initialize OwnYourCode, execute this exact sequence:
+
+1. Bootstrap artifacts (idempotent):
+- Ensure `.ownyourcode/manifest.json` exists (migrate from legacy if needed).
+- Ensure:
+  - `ownyourcode/product/mission.md`
+  - `ownyourcode/product/stack.md`
+  - `ownyourcode/product/roadmap.md`
+  - `ownyourcode/specs/active/`
+  - `ownyourcode/career/stories/`
+
+2. Ask profile selection (mandatory):
+- "Which profile fits you best: Junior, Career Switcher, Interview Prep, Experienced, or Custom?"
+
+3. Ask shared preferences (mandatory):
+- Career focus: full extraction / interview tips / learning only
+- Analogies: yes/no (if yes, ask domain free text)
+
+4. Ask profile-specific questions (mandatory):
+- Junior: coding background
+- Career Switcher: previous field + focus area
+- Interview Prep: position title + target company
+- Experienced: engineering background summary
+- Custom: teaching style, feedback style, pacing, personal touch
+
+5. Ask project definition questions (mandatory):
+- Project mission (problem + users + value)
+- Primary tech stack
+- First 3 development phases
+
+6. Persist outputs before completion (mandatory):
+- Write/update `.ownyourcode/manifest.json` with profile + settings.
+- Write/update:
+  - `ownyourcode/product/mission.md`
+  - `ownyourcode/product/stack.md`
+  - `ownyourcode/product/roadmap.md`
+
+7. Finalize with review loop:
+- Present concise summary of saved profile + artifacts.
+- Ask user to confirm or request edits.
+- Only after confirmation, mark `init` complete.
+
+## `init` Failure Handling
+
+If user gives partial answers:
+- Continue with follow-up questions until required fields are collected.
+- Use reasonable defaults only if user explicitly asks to skip details.
+
+If tools/file writes fail:
+- Report exact failure and retry with safer fallback.
+- Do not silently claim initialization succeeded.
+
 ## Artifact Contracts
 
 Preserve these paths:
@@ -115,5 +179,6 @@ Use these adapted references as needed:
 - `references/claude-skills/**/SKILL.md`
 - `references/standards/**`
 - `references/legacy/CLAUDE.md.template`
+- `references/init-playbook.md`
 
 Treat them as source material; do not expose Claude-specific tool names or slash-command mechanics directly.
